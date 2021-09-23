@@ -1,0 +1,125 @@
+.App-header {
+   font-size: calc(10px + 2vmin);
+  color: white;
+}
+h4 {
+  color: white;
+}
+#categories {
+  width: 25%;
+  float: left;
+  padding: 10px;
+}
+#categories > ul > li {
+  color: lightblue;
+  border-style: double;
+  border-color: white;
+  padding: 20px;
+  list-style: none;
+
+}
+#categories > ul > li:hover {
+  color: black;
+  background-color: white;
+  border-color: red;
+}
+#questions {
+  padding: 10px;
+  color: white;
+  float: left;
+}
+#searchTextBox {
+  margin: 5px;
+  
+}
+#headerLogIn {
+  float: right;
+  padding: 5px;
+}
+#headerLogIn > a , #headerLogIn > a:visited {
+  color: white
+}
+header > h1 {
+  float: left;
+}
+header {
+  height: 150px;
+}
+#logInScreen {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+#innerLogInScreen {
+  border-radius: 15px;
+  padding: 10px;
+height: 200px;
+  width: 200px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  border-style: solid;
+  border-color: green;
+}
+#innerLogInScreen label {
+ color: white;
+}
+#innerLogInScreen input {
+  margin: 10px;
+}
+#logInButton {
+  color: white;
+  background-color: green;
+  border-style: solid;
+  border-color: black;
+  border-radius: 10px;
+  padding: 10px;
+}
+#logInButton:hover {
+  color: white;
+  background-color: red;
+}
+
+#resetLink , #resetLink:visited {
+  color: white;
+}
+#resetScreen {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+#innerResetScreen {
+  border-radius: 15px;
+  padding: 10px;
+height: 200px;
+  width: 300px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  border-style: solid;
+  border-color: green;
+}
+#innerResetScreen label, #innerResetScreen input {
+  color: white;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+} 
+#resetbutton {
+  background-color: green;
+  border-style: none;
+  padding: 5px;
+  border-radius: 5px;
+}
