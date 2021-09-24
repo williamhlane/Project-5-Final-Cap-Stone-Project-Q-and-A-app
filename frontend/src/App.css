@@ -123,3 +123,21 @@ height: 200px;
   padding: 5px;
   border-radius: 5px;
 }
+#closeLink, #closeLink:visited {
+  float: left;
+  color: white;
+}
+.question {
+  font-size: 25px;
+}
+.answer {
+  font-size: 20px;
+}
+#notLoggedIn {
+  color: white;
+  padding: 10px;
+}
+#notLoggedIn2 {
+  color: white;
+  padding: 10px;
+}

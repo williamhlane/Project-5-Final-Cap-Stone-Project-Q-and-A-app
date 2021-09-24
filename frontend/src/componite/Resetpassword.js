@@ -6,7 +6,7 @@ const Resetpassword = () => {
     return(
         <div id="resetScreen"> 
         <div id="innerResetScreen">
-            <a href="./">X</a>
+
             <form onSubmit={resetpassword}>
                 <label>Username:</label>
                 <input type="text" name="username" />
@@ -18,9 +18,11 @@ const Resetpassword = () => {
                 </select>
                 <input type="text" name="answer" />
                 <input type="submit" value="Reset Password" id="resetbutton"/>
-
+                <a href="./" id="closeLink">Close</a>
             </form>
+            
             </div>
+
         </div>
     )
 }
