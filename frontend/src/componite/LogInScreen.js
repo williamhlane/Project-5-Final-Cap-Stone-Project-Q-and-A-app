@@ -17,8 +17,9 @@ const LoginScreen = ({setShowLogIn, backEnd, appState ,setappState }) => {
                 }).then(res => res.json())
                 .then((res) => {
                     if (res.authenticated === "true") {
-                       //appState.app
-                        //setAppState(JSON.parse(JSON.stringify(res)));
+                       appState.loggedIn = true;
+                        appState.username = res.username;
+                        setappState(appState);
                     } else {
                         alert(`Error: ${res.status}`);
                     }
