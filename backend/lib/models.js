@@ -11,14 +11,24 @@ const Users = db.define('Users', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    secretQuestionAnswer:{
+    secretQuestion:{
         type: DataTypes.STRING,
         allowNull: true
     },
+    secretAnswer: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
 },{
     /////////////////////////////////
 });
+/*
+        username: req.body.createusername,
+        password: encrypt(req.body.createpassword),
+        secretQuestion: encrypt(req.body.secretQuestion),
+        secretAnswer: encrypt(req.body.secretAnswer)
 
+*/
 const Categories = db.define('Categories', {
     catName: {
         type: DataTypes.STRING,

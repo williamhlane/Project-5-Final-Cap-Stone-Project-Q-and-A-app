@@ -1,14 +1,34 @@
 import { useState } from 'react';
-const LoginScreen = ({setShowLogIn, backEnd }) => {
-    const [username, setUsername] = useState(false);
-    const [password, setPassword] = useState(false);
+const LoginScreen = ({setShowLogIn, backEnd, appState ,setappState }) => {
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
     const logIn = async (e) => {
         e.preventDefault();
-        await fetch (`${backEnd}/users/login`, {
+        const body = `{ "username" : "${username}", "password" : "${password}" }`;
+        await fetch (`${backEnd}/users`, {
+                    method: 'POST',
+                    mode: 'cors',
+                    credentials: 'include',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: body,
+                }).then(res => res.json())
+                .then((res) => {
+                    if (res.authenticated === "true") {
+                       //appState.app
+                        //setAppState(JSON.parse(JSON.stringify(res)));
+                    } else {
+                        alert(`Error: ${res.status}`);
+                    }
+                    
+                }).catch((error) => {
+                    alert(`Error 2 : ${error}.`)
+                })
+                setShowLogIn(false);
+        
             
-        }).then((n) => {
-
-        })
     }
     return(
         <div id="logInScreen"> 
