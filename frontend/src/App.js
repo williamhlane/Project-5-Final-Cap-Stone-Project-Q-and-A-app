@@ -28,7 +28,7 @@ function App() {
   }).then((res) => {
 
     if (res.authenticated === "true") {
-      console.log('rl' , res);
+  
       appState.loggedIn = true;
       appState.username = res.username;
       setappState(appState);
