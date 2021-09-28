@@ -12,7 +12,34 @@ function App() {
   const backEnd = "http://localhost:3001";
   const [showLogIn, setShowLogIn] = useState(false);
   const [showCreateUser, setShowCreateUser] = useState(false);
-  const [appState2, setappState] = useState({loggedIn:false});
+  const [appState2, setappState] = useState({ loggedIn: false });
+
+
+  fetch(`${backEnd}/users/session`, {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'include',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+  }).then((res) => {
+    return res.json()
+  }).then((res) => {
+
+    if (res.authenticated === "true") {
+      console.log('rl' , res);
+      appState.loggedIn = true;
+      appState.username = res.username;
+      setappState(appState);
+    } else {
+      alert(`Error: ${res.status}`);
+    }
+
+  }).catch((error) => {
+    alert(`Error 2 : ${error}.`)
+  })
+
   let appState = appState2;
   return (
     <BrowserRouter>

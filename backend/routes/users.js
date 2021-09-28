@@ -11,6 +11,15 @@ let postHeader = [
   'Access-Control-Allow-Headers', 'X-Requested-With,content-type',
   'Access-Control-Allow-Credentials', 'true'
 ]
+router.post('/session', (req, res, next) => {
+  res.header(postHeader);
+  if (req.session) {
+    res.write(`{ "authenticated" : "${req.session.authenticated}", "username" : "${req.session.username}" }`);
+  } else {
+    res.write(`{ "authenticated" : "false", "username" : "nli" }`);
+  }
+  res.end();
+});
 router.post('/createuser', async (req, res, next) => {
   bcrypt.hash(req.body.createpassword, salt, async (err, encrypted) => {
     req.body.createpassword = encrypted;
@@ -47,22 +56,22 @@ router.post('/', async function (req, res, next) {
 
     if (nextThing !== null) {
       let tf = bcrypt.compare(req.body.password, nextThing.password, function (err, result) {
-        if(result){
-        if (req.session.viewCount) {
-          req.session.viewCount += 1;
+        if (result) {
+          if (req.session.viewCount) {
+            req.session.viewCount += 1;
+          } else {
+            req.session.viewCount = 1;
+          }
+          req.session.authenticated = "true";
+          req.session.username = req.body.username;
+          res.header(postHeader);
+          res.write(`{ "authenticated" : "${req.session.authenticated}", "username" : "${req.session.username}" }`);
+          res.end();
         } else {
-          req.session.viewCount = 1;
+          res.header(postHeader);
+          res.write(`{ "status" : "Wrong password." }`);
+          res.end();
         }
-        req.session.authenticated = "true";
-        req.session.username = req.body.loginusername;
-        res.header(postHeader);
-        res.write(`{ "authenticated" : "${req.session.authenticated}", "username" : "${req.session.username}" }`);
-        res.end();
-      } else {
-        res.header(postHeader);
-        res.write(`{ "status" : "Wrong password." }`);
-        res.end();
-      }
       });
     } else {
       res.header(postHeader);

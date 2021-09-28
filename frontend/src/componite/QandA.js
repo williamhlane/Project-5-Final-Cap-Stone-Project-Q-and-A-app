@@ -2,9 +2,9 @@ const QandA = () => {
 
    return (
        <div>
-           <div class="question">Question Here</div>
+           <div className="question">Question Here</div>
            <ul>
-            <li class="answer">Answers Here</li>
+            <li className="answer">Answers Here</li>
            </ul>
        </div>
    ) 
