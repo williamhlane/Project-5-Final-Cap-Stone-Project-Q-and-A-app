@@ -11,7 +11,18 @@ let postHeader = [
   'Access-Control-Allow-Headers', 'X-Requested-With,content-type',
   'Access-Control-Allow-Credentials', 'true'
 ]
+let delHeader = [
+  'Access-Control-Allow-Origin', 'http://localhost:3000',
+  'Access-Control-Allow-Methods', 'DELETE',
+  'Access-Control-Allow-Headers', 'X-Requested-With,content-type',
+  'Access-Control-Allow-Credentials', 'true'
+]
+router.get('/logout', (req, res, next) => {
+  req.session.destroy();
+  res.send(`{ "message" : "You are logged out, goodbye." }`)
+})
 router.post('/session', (req, res, next) => {
+  console.log(req.session);
   res.header(postHeader);
   if (req.session) {
     res.write(`{ "authenticated" : "${req.session.authenticated}", "username" : "${req.session.username}" }`);
@@ -87,6 +98,29 @@ router.put('/', (req, res, next) => {
 });
 router.delete('/', (req, res, next) => {
   //THIS IS THE resource that will be called to delete the user
+  if (req.sesson.username === req.body.username) {
+    Users.destroy({
+      where: { 'username': req.body.username }
+    }).then((res) => {
+      console.log(res);
+      res.header(delHeader);
+      res.write(`{ "results" : "${res}", "error" : "false" }`);
+      res.end();
+    }).catch((error) => {
+      res.header(delHeader);
+      res.write(`{ "results" : "Error: ${error}", "error" : "true" }`);
+      res.end();
+    });
+    /*
+    NOT DONE, IT NEEDS TO DELETE FROM ALL TABLES WHERE THE USERNAME HAS INPUT.
+    OR DO I? Maybe give the option?
+    */
+
+    
+
+  } else {
+
+  }
 
 });
 

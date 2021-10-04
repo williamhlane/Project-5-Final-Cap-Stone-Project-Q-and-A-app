@@ -19,6 +19,7 @@ const LoginScreen = ({setShowLogIn, backEnd, appState ,setappState }) => {
                     if (res.authenticated === "true") {
                        appState.loggedIn = true;
                         appState.username = res.username;
+                        appState.alreadySetAppState = true;
                         setappState(appState);
                     } else {
                         alert(`Error: ${res.status}`);

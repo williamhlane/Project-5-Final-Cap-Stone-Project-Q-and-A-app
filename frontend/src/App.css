@@ -170,4 +170,37 @@ height: 300px;
  #innerCreateUserScreen input {
    margin: 10px;
  }
+  #userAccountMain {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+ }
+ #userAccountInner {
+  border-radius: 15px;
+  padding: 10px;
+  height: 300px;
+  width: 200px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  border-style: solid;
+  border-color: green;
+ }
+ .userSettingsLabel {
+   color: white;
+   display: block;
+ }
+ .h3Title {
+  color: white;
+}
+.linkClose {
+  color: white;
+}
+
  /*********************************************************************/
