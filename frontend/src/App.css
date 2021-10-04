@@ -179,10 +179,11 @@ height: 300px;
     display: flex;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.7);
+    
  }
  #userAccountInner {
-  border-radius: 15px;
   padding: 10px;
+  border-radius: 15px;
   height: 300px;
   width: 200px;
   background-color: black;
@@ -191,6 +192,7 @@ height: 300px;
   margin: auto;
   border-style: solid;
   border-color: green;
+  overflow-y: scroll;
  }
  .userSettingsLabel {
    color: white;
@@ -201,6 +203,9 @@ height: 300px;
 }
 .linkClose {
   color: white;
+}
+.settingsTextInput {
+  marin: 3px;
 }
 
  /*********************************************************************/

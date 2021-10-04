@@ -17,12 +17,17 @@ let delHeader = [
   'Access-Control-Allow-Headers', 'X-Requested-With,content-type',
   'Access-Control-Allow-Credentials', 'true'
 ]
+let putHeader = [
+  'Access-Control-Allow-Origin', 'http://localhost:3000',
+  'Access-Control-Allow-Methods', 'PUT',
+  'Access-Control-Allow-Headers', 'X-Requested-With,content-type',
+  'Access-Control-Allow-Credentials', 'true'
+]
 router.get('/logout', (req, res, next) => {
   req.session.destroy();
   res.send(`{ "message" : "You are logged out, goodbye." }`)
 })
 router.post('/session', (req, res, next) => {
-  console.log(req.session);
   res.header(postHeader);
   if (req.session) {
     res.write(`{ "authenticated" : "${req.session.authenticated}", "username" : "${req.session.username}" }`);
@@ -94,32 +99,48 @@ router.post('/', async function (req, res, next) {
 });
 router.put('/', (req, res, next) => {
   //THIS IS THE UPDATE USER USING PUT
-
+  if (req.session.username === req.body.username) {
+    bcrypt.hash(req.body.newpassword, salt, async (err, encrypted) => {
+      req.body.newpassword = encrypted;
+      /////////////////////UPDATE PASSWOrd
+      await Users.update(
+        { password: `${req.body.newpassword}` },
+        { where: { username: `${req.session.username}` } }
+      ).then((results) => {
+        res.header(putHeader);
+        res.write(`{ "results" : "${results}" }`);
+        res.end();
+      }).catch((error) => {
+        res.header(putHeader);
+        res.write(`{ "results" : "${error}" }`);
+        res.end();
+      });
+    });
+  }
 });
 router.delete('/', (req, res, next) => {
   //THIS IS THE resource that will be called to delete the user
-  if (req.sesson.username === req.body.username) {
+  if (req.session.username === req.body.username) {
     Users.destroy({
       where: { 'username': req.body.username }
     }).then((res) => {
-      console.log(res);
+      req.session.destroy();
       res.header(delHeader);
-      res.write(`{ "results" : "${res}", "error" : "false" }`);
+      res.write(`{ "results" : "${res}"}`);
       res.end();
     }).catch((error) => {
       res.header(delHeader);
-      res.write(`{ "results" : "Error: ${error}", "error" : "true" }`);
+      res.write(`{ "results" : "Error: ${error}"}`);
       res.end();
     });
     /*
     NOT DONE, IT NEEDS TO DELETE FROM ALL TABLES WHERE THE USERNAME HAS INPUT.
     OR DO I? Maybe give the option?
     */
-
-    
-
   } else {
-
+    res.header(delHeader);
+    res.write(`{ "results" : "Error: Please try logging in again."}`);
+    res.end();
   }
 
 });
