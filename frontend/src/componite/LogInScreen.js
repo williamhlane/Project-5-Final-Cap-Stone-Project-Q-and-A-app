@@ -43,8 +43,8 @@ const LoginScreen = ({setShowLogIn, backEnd, appState ,setappState }) => {
                 <label>Password:</label>
                 <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)} />
                 <input type="submit" value="Log In" id="logInButton"/>
-                <a id="resetLink" href="./resetpassword">Reset Password</a>   
-                <a onClick={() => setShowLogIn(false)} id="closeLink">Close</a>
+                <a className="resetLink" href="./resetpassword">Reset Password</a>   
+                <span onClick={() => setShowLogIn(false)} id="closeLink">Close</span>
             </form>
             </div>
 

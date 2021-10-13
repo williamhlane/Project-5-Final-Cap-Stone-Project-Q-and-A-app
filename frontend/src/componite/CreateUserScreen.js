@@ -65,7 +65,7 @@ const CreateUserScreen = ({ setShowCreateUser, backEnd }) => {
                     </select>
                     <input type="text" name="answer" onChange={(e) => setSecretAnwser(e.target.value)} />
                     <input type="submit" value="Create User" id="logInButton" />
-                    <a onClick={() => setShowCreateUser(false)} id="closeLink">Close</a>
+                    <span onClick={() => setShowCreateUser(false)} id="closeLink">Close</span>
                 </form>
             </div>
 

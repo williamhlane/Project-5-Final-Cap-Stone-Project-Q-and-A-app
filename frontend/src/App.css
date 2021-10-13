@@ -86,8 +86,9 @@ height: 200px;
   background-color: red;
 }
 
-#resetLink , #resetLink:visited {
+.resetLink , .resetLink:visited, .resetFormLink{
   color: white;
+  text-decoration: none;
 }
 #resetScreen {
   top: 0;
@@ -102,7 +103,7 @@ height: 200px;
 #innerResetScreen {
   border-radius: 15px;
   padding: 10px;
-height: 200px;
+  height: 200px;
   width: 300px;
   background-color: black;
   display: flex;
@@ -117,12 +118,14 @@ height: 200px;
   margin-top: 5px;
   margin-bottom: 5px;
 } 
+#innerResetScreen input { color: black }
 #resetbutton {
   background-color: green;
   border-style: none;
   padding: 5px;
   border-radius: 5px;
 }
+
 #closeLink, #closeLink:visited {
   float: left;
   color: white;
@@ -206,6 +209,29 @@ height: 300px;
 }
 .settingsTextInput {
   marin: 3px;
+}
+.passwordRecoveryMainOuter{
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.passwordRecoveryInner{
+  padding: 10px;
+  border-radius: 15px;
+  height: 200px;
+  width: 200px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  border-style: solid;
+  border-color: green;
+
 }
 
  /*********************************************************************/

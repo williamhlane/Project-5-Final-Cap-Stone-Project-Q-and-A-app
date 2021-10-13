@@ -8,7 +8,7 @@ import CreateUserScreen from './componite/CreateUserScreen';
 import AccountSettings from './componite/AccountSettings';
 import React from 'react';
 import { useState } from 'react';
-import { BrowserRouter as Router, Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 function App() {
   const backEnd = "http://localhost:3001";
   const [showLogIn, setShowLogIn] = useState(false);
@@ -45,7 +45,7 @@ function App() {
       setappState(appState);
     }
   }).catch((error) => {
-    alert(`Error 2 : ${error}.`)
+    console.log(`Error 2 : ${error}.`)
   })
 
   const logOut = () => {
@@ -58,7 +58,7 @@ function App() {
       }).then((res) => {
         alert(`${res.message}`);
       }).catch((e) => {
-        alert(`Error logging out ${e}.`);
+        console.log(`Error logging out ${e}.`);
       });
       window.location.reload(true);
   }
@@ -68,9 +68,9 @@ function App() {
         <header className="App-header">
           <h1>LINUX FORUM</h1>
           <div id="headerLogIn">
-          {appState.loggedIn ? <a onClick={() => setShowAccountSettings(true)}>Account Settings </a> : null}
-            {appState.loggedIn ? <a onClick={logOut}> Log Out</a> : <a onClick={() => setShowLogIn(true)}>Log In </a>}
-            {appState.loggedIn ? null : <a onClick={() => setShowCreateUser(true)}> Create User</a>}
+          {appState.loggedIn ? <span href="#" onClick={() => setShowAccountSettings(true)}>Account Settings </span> : null}
+            {appState.loggedIn ? <span href="#" onClick={logOut}> Log Out</span> : <span onClick={() => setShowLogIn(true)}>Log In </span>}
+            {appState.loggedIn ? null : <span href="#" onClick={() => setShowCreateUser(true)}> Create User</span>}
           </div>
         </header>
    
@@ -81,7 +81,7 @@ function App() {
         {showAccountSettings ? <AccountSettings appState2={appState2} backEnd={backEnd}
         setShowAccountSettings={setShowAccountSettings} /> : null }
         <Route path="/resetpassword">
-          <Resetpassword />
+          <Resetpassword backEnd={backEnd} />
         </Route>
       </div>
     </BrowserRouter>
@@ -89,3 +89,4 @@ function App() {
 }
 
 export default App;
+ 

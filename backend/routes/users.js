@@ -23,6 +23,16 @@ let putHeader = [
   'Access-Control-Allow-Headers', 'X-Requested-With,content-type',
   'Access-Control-Allow-Credentials', 'true'
 ]
+router.get('/', (req, res, next) => {
+  //Get users list
+  Users.findAll().then((data) => {
+    let userList = {};
+    for (const a of data) {
+      userList[a.username] = { id: a.id, username: a.username, secretQuestion: a.secretQuestion }
+    }
+    res.send(JSON.stringify(userList));
+  });
+})
 router.get('/logout', (req, res, next) => {
   req.session.destroy();
   res.send(`{ "message" : "You are logged out, goodbye." }`)
@@ -117,6 +127,41 @@ router.put('/', (req, res, next) => {
       });
     });
   }
+});
+router.put('/resetpassword', async (req, res, next) =>  {
+  //THIS IS THE UPDATE USER USING PUT
+  await Users.findOne({
+    where:
+    {
+      username: `${req.body.username}`
+    }
+  }).then((nextThing) => {
+    if (req.body.answer === nextThing.secretAnswer) {
+      bcrypt.hash(req.body.newpassword, salt, (err, encrypted) => {
+        req.body.newpassword = encrypted;
+        /////////////////////UPDATE PASSWOrd
+        Users.update(
+          { password: `${req.body.newpassword}` },
+          { where: { username: `${req.body.username}` } }
+        ).then((results) => {
+          res.header(putHeader);
+          res.write(`{ "results" : "${results}" }`);
+          res.end();
+        }).catch((error) => {
+          res.header(putHeader);
+          res.write(`{ "results" : "${error}" }`);
+          res.end();
+        });
+      });
+    } else {
+      res.header(putHeader);
+      res.write(`{ "results" : "The answer is wrong." }`);
+      res.end();
+    }
+}).catch((error) => {
+  console.log(error);
+});
+
 });
 router.delete('/', (req, res, next) => {
   //THIS IS THE resource that will be called to delete the user

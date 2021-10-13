@@ -68,7 +68,7 @@ const AccountSettings = ({ appState2, backEnd, setShowAccountSettings }) => {
 
                 <div id="userAccountInner">
                     <div>
-                        <a className="linkClose" onClick={() => setShowAccountSettings(false)} >Close</a>
+                        <span className="linkClose" onClick={() => setShowAccountSettings(false)} >Close</span>
                         <h3 className="h3Title">User Settings for {appState2.username}</h3>
 
                         <form onSubmit={deleteUser}>
