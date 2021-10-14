@@ -34,7 +34,7 @@ const Resetpassword = ({ backEnd }) => {
                         if(res.results === "1"){
                             alert(`The password was updated successfully.`);
                         } else {
-                            alert(`An error has occured, if you get this message your password was not updated.`);
+                            alert(`An error has occured, if you get this message your password was not updated. You may be getting this message if you answer the question wrong.`);
                         }
                         document.getElementById('newPassword1').value = '';
                         document.getElementById('newPassword2').value = '';    

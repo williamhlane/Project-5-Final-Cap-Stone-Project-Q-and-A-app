@@ -22,15 +22,13 @@ const Users = db.define('Users', {
 },{
     /////////////////////////////////
 });
-/*
-        username: req.body.createusername,
-        password: encrypt(req.body.createpassword),
-        secretQuestion: encrypt(req.body.secretQuestion),
-        secretAnswer: encrypt(req.body.secretAnswer)
 
-*/
 const Categories = db.define('Categories', {
     catName: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    owner: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -38,12 +36,20 @@ const Categories = db.define('Categories', {
     /////////////////////////////////
 });
 const Questions = db.define('Questions', {
-    Question: {
+    question: {
         type: DataTypes.STRING,
         allowNull: false
     },
     byWho: {
         type: DataTypes.STRING,
+        allowNull: false
+    },
+    whatCat: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    answered: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
     },
 },{
@@ -55,6 +61,10 @@ const Answers = db.define('Answers', {
         allowNull: false
     },
     toWhat: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    whatCat: {
         type: DataTypes.STRING,
         allowNull: false
     },

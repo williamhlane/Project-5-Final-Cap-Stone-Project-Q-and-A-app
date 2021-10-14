@@ -1,5 +1,5 @@
 .App-header {
-   font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 2vmin);
   color: white;
 }
 h4 {
@@ -72,6 +72,12 @@ height: 200px;
 }
 #innerLogInScreen input {
   margin: 10px;
+}
+button {
+  color: white;
+  border: none;
+  background-color: transparent;
+  font-size: calc(10px + 2vmin);
 }
 #logInButton {
   color: white;
@@ -232,6 +238,9 @@ height: 300px;
   border-style: solid;
   border-color: green;
 
+}
+#AddRemoveCat {
+  color: white;
 }
 
  /*********************************************************************/

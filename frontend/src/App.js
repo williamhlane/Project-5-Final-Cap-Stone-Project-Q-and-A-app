@@ -74,7 +74,7 @@ function App() {
           </div>
         </header>
    
-        {appState.loggedIn ? <Categories /> : <div id="notLoggedIn"><h1>Welcome</h1><br /><h3>Please log in.</h3></div>}
+        {appState.loggedIn ? <Categories appState2={appState2} backEnd={backEnd} /> : <div id="notLoggedIn"><h1>Welcome</h1><br /><h3>Please log in.</h3></div>}
         {appState.loggedIn ? <Questions /> : <div id="notLoggedIn2"><p>Welcom to the linux forum</p></div>}
         {showLogIn ? <LogInScreen setShowLogIn={setShowLogIn} backEnd={backEnd} appState={appState} setappState={setappState} /> : null}
         {showCreateUser ? <CreateUserScreen setShowCreateUser={setShowCreateUser} backEnd={backEnd} /> : null}
