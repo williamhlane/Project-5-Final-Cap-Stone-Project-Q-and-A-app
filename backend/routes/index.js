@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../lib/models');
-let categories = models.categories;
-let answers = models.Answers;
-let questions = models.Questions;
+let Categories = models.Categories;
+let Answers = models.Answers;
+let Questions = models.Questions;
 let postHeader = [
   'Access-Control-Allow-Origin', 'http://localhost:3000',
   'Access-Control-Allow-Methods', 'POST',
@@ -22,45 +22,36 @@ let putHeader = [
   'Access-Control-Allow-Headers', 'X-Requested-With,content-type',
   'Access-Control-Allow-Credentials', 'true'
 ]
-router.get('/' , (req, res, next) => {
+router.get('/', (req, res, next) => {
   //This will provide a list of categorys, questions and answers
 });
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
   //ADD CATEGORY, question and answer
   ///This chuck of code is to create the category///////////////////
   if (req.session.username === req.body.username) {
     if (typeof (req.body.newCategory) !== "undefined") {
-      categories.count({ where: { 'catName': req.body.newCategory } })
-        .then((count) => {
+      await Categories.count({ where: { 'catName': req.body.newCategory } })
+        .then(async (count) => {
           if (count == 0) {
-            categories.create({
+            await Categories.create({
               catName: req.body.newCategory,
               owner: req.session.username,
-            }).then((res) => {
-              res.header(postHeader);
-              res.write(`{ "results" : "Success ${req.body.newCategory} was created!"}`);
-              res.end();
+            }).then((results) => {
+              console.log(results);
+              res.send(`{ "results" : "Success ${req.body.newCategory} was created!"}`);
             }).catch((error) => {
-              res.header(postHeader);
-              res.write(`{ "results" : "${error}"}`);
-              res.end();
+              res.send(`{ "results" : "${error}"}`);
             });
           } else {
-            res.header(postHeader);
-            res.write(`{ "results" : "That category exists."}`);
-            res.end();
+            res.send(`{ "results" : "That category exists."}`);
           }
         }).catch((error) => {
-          res.header(postHeader);
-          res.write(`{ "results" : "${error}"}`);
-          res.end();
+          res.send(`{ "results" : "${error}"}`);
         });
     }
-   /////////////////////////////////////////////////////////////// 
+    /////////////////////////////////////////////////////////////// 
   } else {
-    res.header(postHeader);
-    res.write(`{ "results" : "Session name does not match one sent."}`);
-    res.end();
+    res.send(`{ "results" : "Session name does not match one sent."}`);
   }
 });
 router.delete('/', (req, res, next) => {

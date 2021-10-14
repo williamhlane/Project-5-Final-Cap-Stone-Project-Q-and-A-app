@@ -10,7 +10,7 @@ const Categories = ({appState2, backEnd}) => {
     const addCat = async (e) => {
         e.preventDefault();
         const body = `{ "username" : "${appState2.username}", "newCategory" : "${newCat}" }`;
-       await fetch(`${backEnd}/`, {
+       await fetch(`${backEnd}`, {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -21,8 +21,8 @@ const Categories = ({appState2, backEnd}) => {
             body: body,
         }).then((res) => {
             return res.json();
-        }).then((res) => {
-            alert(`${res.results}`)
+        }).then((res2) => {
+            alert(`${res2.results}`)
             setShowAddRmCat(false);
         }).catch((error) => {
             alert(`Error 2 : ${error}.`);
