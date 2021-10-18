@@ -24,6 +24,28 @@ let putHeader = [
 ]
 router.get('/', (req, res, next) => {
   //This will provide a list of categorys, questions and answers
+  if (req.query.dowhat === "listcategories") {
+    console.log('list cat');
+    ///START HERE RETURN JSON THAT LISTS THE CATEGORIES
+    Categories.findAll()
+      .then((results) => {
+        let tempOb = {};
+        let i = 0;
+        console.log(results.length);
+
+        results.forEach(element => {
+         // tempArray.push(element.catName);
+          tempOb[element.catName] = { catName : `${element.catName}`, owner : `${element.owner}` };
+          i++;
+        });
+        res.send(JSON.stringify(tempOb));
+      }).catch((error) => {
+        console.log(error);
+      });
+  } else {
+    res.send("Error.")
+  }
+  //res.send(req.query);
 });
 router.post('/', async (req, res, next) => {
   //ADD CATEGORY, question and answer
@@ -54,8 +76,54 @@ router.post('/', async (req, res, next) => {
     res.send(`{ "results" : "Session name does not match one sent."}`);
   }
 });
-router.delete('/', (req, res, next) => {
+router.delete('/', async (req, res, next) => {
   //DELETE CATEGORY, question and answer
+  if (typeof (req.body.delCategory) !== "undefined") {
+    //NEEDS TO LOOK UP WHO CREATED IT.
+    await Categories.findOne({
+      where: {
+        catName: req.body.delCategory,
+      }
+    }).then(async (results) => {
+      if (results.owner === req.session.username) {
+        await Questions.destroy({
+          where: {
+            whatCat: req.body.delCategory,
+          }
+        }).then((n) => {
+          console.log(n);
+        }).catch((error) => {
+          console.log(error);
+        });
+        await Answers.destroy({
+          where: {
+            whatCat: req.body.delCategory,
+          }
+        }).then((n) => {
+          console.log(n);
+        }).catch((error) => {
+          console.log(error);
+        });
+        await Categories.destroy({
+          where: {
+            catName: req.body.delCategory,
+          }
+        }).then((n) => {
+          console.log(n);
+          res.send(`{ "results" : "Done" }`);
+        }).catch((error) => {
+          console.log(error);
+        });
+      } else {
+        console.log('Error username does not match owner.');
+        res.send(`{ "results" : "Error username does not match owner." }`);
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    
+  }
 
 });
 router.put('/', (req, res, next) => {
