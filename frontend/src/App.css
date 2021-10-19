@@ -242,5 +242,23 @@ height: 300px;
 #AddRemoveCat {
   color: white;
 }
-
+.selectQuestionDiv {
+  padding: 5px;
+  border-radius: 10px;
+  border-color: white;
+  border-style: solid;
+  font-size: 20px;
+  color: rgb(230, 71, 71);
+}
+.selectQuestionDiv:hover {
+  border-color: green;
+  color: rgb(230, 71, 71);
+  background-color: white;
+}
+#questionlist {
+  padding: 10px;
+  border-style: solid;
+  height: 250px;
+  overflow-y: scroll;
+}
  /*********************************************************************/

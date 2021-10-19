@@ -1,15 +1,13 @@
 import { useState } from "react";
 import AddRmCat from "./AddRmCat";
 
-const Categories = ({ appState2, backEnd }) => {
+const Categories = ({ appState2, backEnd, setCurrentCat, catList, setCatList }) => {
     const [showAddRmCat, setShowAddRmCat] = useState(false);
     const [newCat, setNewCat] = useState();
     const [delCat, setDelCat] = useState();
-    const [catList, setCatList] = useState({});
+
     const [catListFetched, setCatListFetched] = useState(false);
-    const catClick = (catName) => {
-        console.log(catName);
-    }
+
     const addCat = async (e) => {
         e.preventDefault();
         const body = `{ "username" : "${appState2.username}", "newCategory" : "${newCat}" }`;
@@ -34,9 +32,8 @@ const Categories = ({ appState2, backEnd }) => {
     }
     const delCatFunc = async (e) => {
         e.preventDefault();
-       // console.log(delCat);
         if (window.confirm(`Are you sure you want to delete ${delCat}?`)) {
-            const body = `{ "username" : "${appState2.username}", "delCategory" : "${delCat}" }`;
+            const body = `{ "username" : "${appState2.username}", "delCategoryID" : "${delCat}" }`;
             await fetch(`${backEnd}`, {
                 method: 'DELETE',
                 mode: 'cors',
@@ -56,7 +53,6 @@ const Categories = ({ appState2, backEnd }) => {
                 alert(`Error 2 : ${error}.`);
             });
         }
-
     }
 
     if (!catListFetched) {
@@ -67,23 +63,23 @@ const Categories = ({ appState2, backEnd }) => {
         }).then((responce) => {
             return responce.json();
         }).then((list) => {
-            console.log(list);
+            setCurrentCat(list[0].id);
             setCatList(list);
             setCatListFetched(true);
         }).catch((error) => {
             console.log(error);
         });
     }
-  
+    //NOTES ADD CATEGORY RENAME LATER
     return (
         <div id="categories">
             <h4>Categories</h4>
             {showAddRmCat ? <button onClick={() => setShowAddRmCat(false)}>Hide Add Category</button> : <button onClick={() => setShowAddRmCat(true)}>Show Add Category</button>}
-            {showAddRmCat ? <AddRmCat addCat={addCat} setNewCat={setNewCat} catList={catList} setDelCat={setDelCat} delCatFunc={delCatFunc} appState2={appState2} /> : null}
+            {showAddRmCat ? <AddRmCat addCat={addCat} setNewCat={setNewCat} catList={catList}
+                setDelCat={setDelCat} delCatFunc={delCatFunc} appState2={appState2} /> : null}
             <ul>
-                {}
-                {Object.keys(catList).map((element, index) => (                      
-                        <li onClick={() => catClick(element)} key={index}>{element}</li>    
+                {catList.map((element, index) => (
+                    <li onClick={() => setCurrentCat(element.id)} key={index}>{element.catName}</li>
                 ))}
             </ul>
         </div>

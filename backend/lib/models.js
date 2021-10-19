@@ -44,8 +44,8 @@ const Questions = db.define('Questions', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    whatCat: {
-        type: DataTypes.STRING,
+    whatCatID: {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     answered: {
@@ -64,8 +64,8 @@ const Answers = db.define('Answers', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    whatCat: {
-        type: DataTypes.STRING,
+    whatCatID: {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     byWho:{

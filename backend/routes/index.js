@@ -25,23 +25,39 @@ let putHeader = [
 router.get('/', (req, res, next) => {
   //This will provide a list of categorys, questions and answers
   if (req.query.dowhat === "listcategories") {
-    console.log('list cat');
-    ///START HERE RETURN JSON THAT LISTS THE CATEGORIES
     Categories.findAll()
       .then((results) => {
-        let tempOb = {};
-        let i = 0;
-        console.log(results.length);
-
+        let tempArray = [];
         results.forEach(element => {
-         // tempArray.push(element.catName);
-          tempOb[element.catName] = { catName : `${element.catName}`, owner : `${element.owner}` };
-          i++;
+          tempArray.push({ catName: `${element.catName}`, owner: `${element.owner}`, id: `${element.id}` });
         });
-        res.send(JSON.stringify(tempOb));
+        res.send(JSON.stringify(tempArray));
       }).catch((error) => {
         console.log(error);
       });
+  } else if (req.query.dowhat === "listquestions") {
+
+        Questions.findAll({
+          where: {
+            whatCatID: req.query.currentCat,
+          }
+        }).then((results) => {
+          let tempArray = [];
+          results.forEach(element => {
+            tempArray.push({
+              id : `${element.id}`,
+              question: `${element.question}`,
+              byWho: `${element.byWho}`,
+              answered: `${element.answered}`,
+              whatCatID : `${element.whatCatID}`,
+            });
+          });
+          res.send(JSON.stringify(tempArray));
+        }).catch((error) => {
+          console.log(error);
+        });
+  
+      
   } else {
     res.send("Error.")
   }
@@ -71,45 +87,67 @@ router.post('/', async (req, res, next) => {
           res.send(`{ "results" : "${error}"}`);
         });
     }
+    if (typeof (req.body.newQuestion) !== "undefined") {
+      await Questions.count({ where: { 'question': req.body.newQuestion } })
+        .then(async (count) => {
+          if (count == 0) {
+            await Questions.create({
+              question: req.body.newQuestion,
+              byWho: req.session.username,
+              whatCatID: req.body.currentCat,
+              answered: false,
+            }).then((results) => {
+              console.log(results);
+              res.send(`{ "results" : "Success ${req.body.newQuestion} was created!"}`);
+            }).catch((error) => {
+              res.send(`{ "results" : "${error}"}`);
+            });
+          } else {
+            res.send(`{ "results" : "That question exists."}`);
+          }
+        }).catch((error) => {
+          res.send(`{ "results" : "${error}"}`);
+        });
+      }
     /////////////////////////////////////////////////////////////// 
   } else {
-    res.send(`{ "results" : "Session name does not match one sent."}`);
+  res.send(`{ "results" : "Session name does not match one sent."}`);
   }
 });
+
 router.delete('/', async (req, res, next) => {
   //DELETE CATEGORY, question and answer
-  if (typeof (req.body.delCategory) !== "undefined") {
-    //NEEDS TO LOOK UP WHO CREATED IT.
+  if (typeof (req.body.delCategoryID) !== "undefined") {
     await Categories.findOne({
       where: {
-        catName: req.body.delCategory,
+        id: req.body.delCategoryID,
       }
     }).then(async (results) => {
       if (results.owner === req.session.username) {
         await Questions.destroy({
           where: {
-            whatCat: req.body.delCategory,
+            whatCatID: results.id,
           }
         }).then((n) => {
-          console.log(n);
+          console.log(`Delete questions results: ${n}`);
         }).catch((error) => {
           console.log(error);
         });
         await Answers.destroy({
           where: {
-            whatCat: req.body.delCategory,
+            whatCatID: results.id,
           }
         }).then((n) => {
-          console.log(n);
+          console.log(`Delete answers results: ${n}`);
         }).catch((error) => {
           console.log(error);
         });
         await Categories.destroy({
           where: {
-            catName: req.body.delCategory,
+            id: results.id,
           }
         }).then((n) => {
-          console.log(n);
+          console.log(`Delete Category results: ${n}`);
           res.send(`{ "results" : "Done" }`);
         }).catch((error) => {
           console.log(error);
@@ -122,7 +160,7 @@ router.delete('/', async (req, res, next) => {
       console.log(error);
     });
 
-    
+
   }
 
 });

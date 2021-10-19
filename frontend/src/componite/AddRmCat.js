@@ -1,12 +1,5 @@
 
 const AddRmCat= ({addCat, setNewCat, catList, setDelCat, delCatFunc, appState2}) => {
-    let list = [];
-    for (const property in catList) {
-        if(catList[property].owner === appState2.username){
-            list.push(property);
-        }
-      }
-
 
     return (
         <div id="AddRemoveCat">
@@ -20,8 +13,8 @@ const AddRmCat= ({addCat, setNewCat, catList, setDelCat, delCatFunc, appState2})
                 Delete a category.
             </label>
             <select onChange={(e) => setDelCat(e.target.value)}>
-                {list.map((catName, index) => (
-                    <option key={index}>{catName}</option>
+                {catList.map((cat, index) => (
+                   cat.owner === appState2.username ? <option key={index} value={cat.id}>{cat.catName}</option> : null
                 ))}
             </select>
             <input type="submit" />
