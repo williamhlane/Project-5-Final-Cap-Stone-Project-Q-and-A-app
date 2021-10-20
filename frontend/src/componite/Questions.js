@@ -1,12 +1,12 @@
 import QandA from './QandA';
 import { useState } from 'react';
 const Questions = ({currentCat, appState2, backEnd, setCurrentCat, catList }) => {
-    const [question, setQuestion] = useState();
-    const [searchString, setSearchString] = useState();
+    const [newQuestion, setNewQuestion] = useState();
+
 const ask = async (e) => {
     e.preventDefault();
     document.getElementById('askQuestionText').value = '';
-    const body = `{ "username" : "${appState2.username}", "currentCat" : "${currentCat}", "newQuestion" : "${question}" }`;
+    const body = `{ "username" : "${appState2.username}", "currentCat" : "${currentCat}", "newQuestion" : "${newQuestion}" }`;
     await fetch(`${backEnd}`, {
         method: 'POST',
         mode: 'cors',
@@ -23,12 +23,9 @@ const ask = async (e) => {
     }).catch((error) => {
         alert(`Error 2 : ${error}.`);
     });
+    
 }
-const search = (e) => {
-    e.preventDefault();
-    console.log(searchString);
-    document.getElementById('searchTextBox').value = '';
-}
+
 
     return (
         <div id="questions">
@@ -38,17 +35,13 @@ const search = (e) => {
 
                 <form onSubmit={ask}>
                     <label>Ask a Question!</label><br />
-                    <textarea id="askQuestionText" onChange={(e) => setQuestion(e.target.value)} placeholder="Type your question here."></textarea><br />
+                    <textarea id="askQuestionText" onChange={(e) => setNewQuestion(e.target.value)} placeholder="Type your question here."></textarea><br />
                     <input type="submit" value="Ask!" />
                 </form>
-                <form onSubmit={search}>
-                    <label>Search</label>
-                    <input onChange={(e) => setSearchString(e.target.value)} type="search" name="search" id="searchTextBox" placeholder="Search for a Question" />
-                    <input type="submit" value="GO!" />
-                </form>
+
             </div>
 
-            <QandA appState2={appState2} backEnd={backEnd} setCurrentCat={setCurrentCat} question={question} currentCat={currentCat} catList={catList} />
+            <QandA appState2={appState2} backEnd={backEnd} setCurrentCat={setCurrentCat}  currentCat={currentCat} catList={catList} />
 
         </div>
     )

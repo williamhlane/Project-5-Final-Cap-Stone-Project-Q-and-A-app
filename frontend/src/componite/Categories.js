@@ -1,13 +1,10 @@
 import { useState } from "react";
 import AddRmCat from "./AddRmCat";
 
-const Categories = ({ appState2, backEnd, setCurrentCat, catList, setCatList }) => {
+const Categories = ({ appState2, backEnd, setCurrentCat, catList, setCatList, setCatListFetched, catListFetched }) => {
     const [showAddRmCat, setShowAddRmCat] = useState(false);
     const [newCat, setNewCat] = useState();
     const [delCat, setDelCat] = useState();
-
-    const [catListFetched, setCatListFetched] = useState(false);
-
     const addCat = async (e) => {
         e.preventDefault();
         const body = `{ "username" : "${appState2.username}", "newCategory" : "${newCat}" }`;
@@ -64,6 +61,7 @@ const Categories = ({ appState2, backEnd, setCurrentCat, catList, setCatList }) 
             return responce.json();
         }).then((list) => {
             setCurrentCat(list[0].id);
+            setDelCat(list[0].id);
             setCatList(list);
             setCatListFetched(true);
         }).catch((error) => {

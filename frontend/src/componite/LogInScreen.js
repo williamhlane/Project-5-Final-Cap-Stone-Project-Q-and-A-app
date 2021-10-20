@@ -29,8 +29,6 @@ const LoginScreen = ({setShowLogIn, backEnd, appState ,setappState }) => {
                     alert(`Error 2 : ${error}.`)
                 })
                 setShowLogIn(false);
-        
-            
     }
     return(
         <div id="logInScreen"> 

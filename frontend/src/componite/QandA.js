@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Qbox from "./Qbox";
 const QandA = ({ currentCat, appState2, backEnd, catList }) => {
     const [qListFetched, setQListFetched] = useState(false);
     const [qList, setQList] = useState([{ id: ' ', question: ' ', byWho: ' ', answered: ' ', whatCatID: ' ' }]);
@@ -22,22 +23,6 @@ const QandA = ({ currentCat, appState2, backEnd, catList }) => {
             alert(`Error 2 : ${error}.`);
         });
     }
-    const Qbox = ({ question }) => {
-
-        return (
-            <>
-                <h3>{question.question}</h3>
-                <ul>
-                    <li key='1' className="answer">Answers Here</li>
-                </ul>
-                <input type="text" />
-            </>
-        )
-    }
-
-
-
-
     return (
         <div>
 
@@ -47,13 +32,12 @@ const QandA = ({ currentCat, appState2, backEnd, catList }) => {
                 ))}</h4>
                 {
                     qList.map((question, index) => (
-                        <div className='selectQuestionDiv' key={index} onClick={() => setSelectedQuestion(question.id)}>{question.whatCatID === currentCat ? question.question : null}</div>
+                        question.whatCatID === currentCat ? <div className='selectQuestionDiv' key={index} onClick={() => setSelectedQuestion(question.id)}>{question.question}-Answered? {question.answered === 'true' ? 'Yes' : "No"}</div> : null
                     ))
                 }
             </div>
-
             <div className="question">{qList.map((question, index) => (
-                question.id === selectedQuestion && question.whatCatID === currentCat ? <Qbox question={question} /> : null
+                question.id === selectedQuestion && question.whatCatID === currentCat ? <Qbox key={index} question={question} appState2={appState2} backEnd={backEnd} currentCat={currentCat} setQListFetched={setQListFetched} /> : null
             ))}</div>
 
 
