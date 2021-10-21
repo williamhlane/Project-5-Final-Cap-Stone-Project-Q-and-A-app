@@ -18,6 +18,8 @@ function App() {
   const [currentCat, setCurrentCat] = useState();
   const [catList, setCatList] = useState([{ catName: ` `, owner: ` `, id: ` ` }]);
   const [catListFetched, setCatListFetched] = useState(false);
+  const [qListFetched, setQListFetched] = useState(false);
+  const [qList, setQList] = useState([{ id: ' ', question: ' ', byWho: ' ', answered: ' ', whatCatID: ' ' }]);
   let appState = {
     loggedIn: false,
     username: null,
@@ -78,9 +80,10 @@ function App() {
         </header>
  
         {appState.loggedIn ? <Categories appState2={appState2} backEnd={backEnd} setCurrentCat={setCurrentCat} 
-        catList={catList} setCatList={setCatList}  catListFetched={catListFetched} setCatListFetched={setCatListFetched} /> : <div id="notLoggedIn"><h1>Welcome</h1><br /><h3>Please log in.</h3></div>}
+        catList={catList} setCatList={setCatList}  catListFetched={catListFetched} setCatListFetched={setCatListFetched} setQListFetched={setQListFetched} /> : <div id="notLoggedIn"><h1>Welcome</h1><br /><h3>Please log in.</h3></div>}
         {appState.loggedIn ? <Questions currentCat={currentCat} appState2={appState2} backEnd={backEnd} 
-        setCurrentCat={setCurrentCat} catList={catList} setCatList={setCatList} /> : <div id="notLoggedIn2"><p>Welcom to the linux forum</p></div>}
+        setCurrentCat={setCurrentCat} catList={catList} setCatList={setCatList} qListFetched={qListFetched} 
+        setQListFetched={setQListFetched} qList={qList} setQList={setQList} /> : <div id="notLoggedIn2"><p>Welcom to the linux forum</p></div>}
         {showLogIn ? <LogInScreen setShowLogIn={setShowLogIn} backEnd={backEnd} appState={appState} setappState={setappState} /> : null}
         {showCreateUser ? <CreateUserScreen setShowCreateUser={setShowCreateUser} backEnd={backEnd} /> : null}
         {showAccountSettings ? <AccountSettings appState2={appState2} backEnd={backEnd}

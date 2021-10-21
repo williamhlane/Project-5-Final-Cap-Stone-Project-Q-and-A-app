@@ -206,12 +206,12 @@ router.delete('/', async (req, res, next) => {
       console.log(error);
     });
   } else if (typeof (req.body.delQuestionID) !== "undefined") {
-    Questions.findAll({
+    Questions.findOne({
       where: {
-        id: delQuestionID,
+        id: req.body.delQuestionID,
       }
     }).then(async (results) => {
-      if (results.owner === req.body.username) {
+      if (results.byWho === req.session.username) {
         await Questions.destroy({
           where: {
             id: req.body.delQuestionID,
@@ -244,7 +244,7 @@ router.delete('/', async (req, res, next) => {
         id: req.body.delAnswerID,
       }
     }).then( async (results) => {
-      if (results.username === req.body.username) {/////CHECK OWNER
+      if (results.byWho === req.session.username) {/////CHECK OWNER
         await Answers.destroy({
           where: {
             id: req.body.delAnswerID,
@@ -267,7 +267,6 @@ router.delete('/', async (req, res, next) => {
 });
 router.put('/', (req, res, next) => {
   //edit question and answer
-
 });
 
 

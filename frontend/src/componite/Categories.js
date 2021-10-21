@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AddRmCat from "./AddRmCat";
 
-const Categories = ({ appState2, backEnd, setCurrentCat, catList, setCatList, setCatListFetched, catListFetched }) => {
+const Categories = ({ appState2, backEnd, setCurrentCat, catList, setCatList, setCatListFetched, catListFetched}) => {
     const [showAddRmCat, setShowAddRmCat] = useState(false);
     const [newCat, setNewCat] = useState();
     const [delCat, setDelCat] = useState();
@@ -21,6 +21,7 @@ const Categories = ({ appState2, backEnd, setCurrentCat, catList, setCatList, se
             return res.json();
         }).then((res2) => {
             alert(`${res2.results}`)
+            
             setCatListFetched(false);
             setShowAddRmCat(false);
         }).catch((error) => {
@@ -51,7 +52,7 @@ const Categories = ({ appState2, backEnd, setCurrentCat, catList, setCatList, se
             });
         }
     }
-
+   
     if (!catListFetched) {
         fetch(`${backEnd}?dowhat=listcategories`, {
             method: 'GET',
@@ -69,6 +70,7 @@ const Categories = ({ appState2, backEnd, setCurrentCat, catList, setCatList, se
         });
     }
     //NOTES ADD CATEGORY RENAME LATER
+
     return (
         <div id="categories">
             <h4>Categories</h4>

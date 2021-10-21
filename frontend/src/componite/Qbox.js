@@ -21,6 +21,7 @@ const Qbox = ({ question, appState2, currentCat, backEnd, setQListFetched }) => 
             body: body,
         }).then((res) => {
             return res.json();
+            
         }).then((res2) => {
             alert(`${res2.results}`);
             setQListFetched(false);
@@ -28,6 +29,7 @@ const Qbox = ({ question, appState2, currentCat, backEnd, setQListFetched }) => 
         }).catch((error) => {
             alert(`Error 2 : ${error}.`);
         });
+       await setQListFetched(false);
     }
     if(!answersList) {
         fetch(`${backEnd}?dowhat=listanswers&currentCat=${currentCat}&username=${appState2.username}&questionId=${question.id}`, {
@@ -68,6 +70,7 @@ const Qbox = ({ question, appState2, currentCat, backEnd, setQListFetched }) => 
             }).catch((error) => {
                 alert(`Error 2 : ${error}.`);
             });
+            await setQListFetched(false);
         }
     }
     const deleteAnswer = async (id) => {
@@ -90,6 +93,7 @@ const Qbox = ({ question, appState2, currentCat, backEnd, setQListFetched }) => 
             }).catch((error) => {
                 alert(`Error 2 : ${error}.`);
             });
+            await setQListFetched(false);
         }
     }
     return (

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import Qbox from "./Qbox";
-const QandA = ({ currentCat, appState2, backEnd, catList }) => {
-    const [qListFetched, setQListFetched] = useState(false);
-    const [qList, setQList] = useState([{ id: ' ', question: ' ', byWho: ' ', answered: ' ', whatCatID: ' ' }]);
+const QandA = ({ currentCat, appState2, backEnd, catList, qListFetched, setQListFetched, qList, setQList}) => {
+
     const [selectedQuestion, setSelectedQuestion] = useState();
     if (!qListFetched) {
         fetch(`${backEnd}?dowhat=listquestions&currentCat=${currentCat}&username=${appState2.username}`, {
